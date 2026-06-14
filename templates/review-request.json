@@ -1,0 +1,22 @@
+{
+  "made_by": "sudal",
+  "mode": "full",
+  "task": "",
+  "changed_files_or_artifacts": [],
+  "evidence_collected": [],
+  "verification_already_run": [],
+  "known_limitations": [],
+  "implementation_size_limit": {
+    "preferred": "200-300 changed lines",
+    "hard_max": 500,
+    "actual_changed_lines": 0,
+    "size_gate_status": "SIZE_LIMIT_OK"
+  },
+  "reviewer_focus": [
+    "bugs_or_behavioral_regressions",
+    "missed_requirements",
+    "weak_or_missing_verification",
+    "repeated_mistake_patterns",
+    "risky_assumptions"
+  ]
+}

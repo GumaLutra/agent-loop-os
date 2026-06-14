@@ -1,0 +1,28 @@
+{
+  "made_by": "sudal",
+  "format_preference": {
+    "operational_data": "json",
+    "human_guides": "markdown",
+    "reason": "JSON is preferred for task state, memory, review records, and automation. Markdown remains useful for public guides and AI-readable instructions."
+  },
+  "code_budget": {
+    "preferred_min_lines": 200,
+    "preferred_max_lines": 300,
+    "hard_max_lines": 500,
+    "over_preferred_action": "warn_and_consider_split",
+    "over_hard_max_action": "force_task_split",
+    "split_rule": "If a coding task is expected to exceed 500 lines, split it into smaller tasks before implementation."
+  },
+  "implementation_size_limit": {
+    "unit": "changed_lines",
+    "preferred": {
+      "min": 200,
+      "max": 300
+    },
+    "hard_max": 500,
+    "measurement": "git diff --numstat staged + unstaged added/deleted lines",
+    "if_exceeded": "TASK_SPLIT_REQUIRED"
+  },
+  "loop_modes": ["solo", "full"],
+  "review_decisions": ["ACCEPT", "REJECT", "DEFER"]
+}

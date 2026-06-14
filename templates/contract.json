@@ -1,0 +1,34 @@
+{
+  "made_by": "sudal",
+  "contract_version": "1.0",
+  "task": {
+    "id": "",
+    "title": "",
+    "type": "",
+    "mode": "solo",
+    "goal": "",
+    "scope": [],
+    "non_goals": []
+  },
+  "implementation_size_limit": {
+    "unit": "changed_lines",
+    "preferred": {
+      "min": 200,
+      "max": 300
+    },
+    "hard_max": 500,
+    "measurement": "git diff --numstat staged + unstaged added/deleted lines",
+    "if_exceeded": "TASK_SPLIT_REQUIRED",
+    "cap_relaxation_allowed": false
+  },
+  "evidence_required": [],
+  "verification_gate": [],
+  "review": {
+    "external_reviewer": "",
+    "decisions": ["ACCEPT", "REJECT", "DEFER"]
+  },
+  "memory_update": {
+    "required_when_repeated_mistake": true,
+    "event_codes": ["SIZE_LIMIT_EXCEEDED"]
+  }
+}

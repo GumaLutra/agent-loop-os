@@ -1,0 +1,39 @@
+{
+  "made_by": "sudal",
+  "mode": "solo",
+  "task_type": "ui",
+  "title": "",
+  "goal": "",
+  "scope": [],
+  "non_goals": [],
+  "code_budget": {
+    "estimated_lines": 0,
+    "preferred_max_lines": 300,
+    "hard_max_lines": 500,
+    "split_required": false
+  },
+  "implementation_size_limit": {
+    "unit": "changed_lines",
+    "preferred": {
+      "min": 200,
+      "max": 300
+    },
+    "hard_max": 500,
+    "if_exceeded": "TASK_SPLIT_REQUIRED"
+  },
+  "risk_brief": {
+    "top_risks": [],
+    "cheapest_useful_measurement": "",
+    "required_verification_gate": ""
+  },
+  "stories": [
+    {
+      "id": "S1",
+      "title": "",
+      "evidence_expected": [],
+      "status": "pending"
+    }
+  ],
+  "verification_criteria": [],
+  "completion_evidence": []
+}

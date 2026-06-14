@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Loop OS Contract",
+  "type": "object",
+  "required": ["made_by", "contract_version", "task", "implementation_size_limit"],
+  "properties": {
+    "made_by": {
+      "const": "sudal"
+    },
+    "contract_version": {
+      "type": "string"
+    },
+    "task": {
+      "type": "object",
+      "required": ["title", "type", "mode", "goal", "scope", "non_goals"],
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "type": { "type": "string" },
+        "mode": { "enum": ["solo", "full"] },
+        "goal": { "type": "string" },
+        "scope": { "type": "array", "items": { "type": "string" } },
+        "non_goals": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "implementation_size_limit": {
+      "type": "object",
+      "required": ["unit", "preferred", "hard_max", "measurement", "if_exceeded", "cap_relaxation_allowed"],
+      "properties": {
+        "unit": { "const": "changed_lines" },
+        "preferred": {
+          "type": "object",
+          "required": ["min", "max"],
+          "properties": {
+            "min": { "type": "integer", "const": 200 },
+            "max": { "type": "integer", "const": 300 }
+          }
+        },
+        "hard_max": { "type": "integer", "maximum": 500 },
+        "measurement": { "type": "string" },
+        "if_exceeded": { "const": "TASK_SPLIT_REQUIRED" },
+        "cap_relaxation_allowed": { "const": false }
+      }
+    }
+  }
+}

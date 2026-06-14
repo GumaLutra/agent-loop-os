@@ -1,0 +1,10 @@
+{
+  "date": "2026-06-14T00:00:00Z",
+  "task_type": "ui",
+  "mistake_type": "visual-not-verified",
+  "lesson": "UI changes require browser or screenshot verification before completion.",
+  "severity": "medium",
+  "source": "review",
+  "evidence": "Reviewer found CSS change with no rendered check.",
+  "made_by": "sudal"
+}

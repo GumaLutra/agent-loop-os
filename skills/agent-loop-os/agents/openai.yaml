@@ -1,0 +1,3 @@
+display_name: Agent Loop OS
+short_description: Evidence, review, verification, memory.
+default_prompt: Use Agent Loop OS to plan, review, verify, and remember repeated mistakes for this task.

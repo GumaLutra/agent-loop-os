@@ -1,0 +1,20 @@
+{
+  "made_by": "sudal",
+  "summary": {
+    "ACCEPT": 0,
+    "REJECT": 0,
+    "DEFER": 0
+  },
+  "findings": [
+    {
+      "title": "",
+      "decision": "ACCEPT",
+      "reason": "",
+      "action": "",
+      "verification": "",
+      "memory_update": ""
+    }
+  ],
+  "final_verification": [],
+  "remaining_risk": []
+}
