@@ -9,6 +9,8 @@ Agent Loop OS는 AI-agent 작업을 위한 툴 중립 운영체계입니다. 핵
 - 완료 전에 리뷰하고 검증한다.
 - 반복 실수를 기억해서 다음 작업의 위험을 줄인다.
 
+여기에 진단 규율을 더합니다. 관찰된 단서에서 시작하고, 모든 단서를 설명하는 가설을 우선하며, 확신도를 표시하고, 위험한 수정 전에는 가장 싼 감별 확인을 먼저 고릅니다.
+
 운영 데이터는 JSON-first로 둡니다. Markdown은 사람이 읽는 가이드와 AI에게 붙여넣는 pack에 적합하고, task state, review record, risk brief, verification report, memory entry는 JSON 템플릿을 함께 제공합니다.
 
 코딩 작업은 가능하면 200~300줄 안팎을 선호합니다. 예상 코드가 500줄을 넘을 것 같으면 구현 전에 task를 쪼개도록 강제합니다.
@@ -133,6 +135,7 @@ packs/
   memory-ledger.md
   rebuttal-protocol.md
   risk-brief.md
+  diagnostic-discipline.md
 
 templates/
   contract.json

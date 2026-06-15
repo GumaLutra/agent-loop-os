@@ -22,6 +22,12 @@
     "cap_relaxation_allowed": false
   },
   "evidence_required": [],
+  "diagnosis": {
+    "observed_clues": [],
+    "leading_hypothesis": "",
+    "confidence": "unverified",
+    "cheapest_discriminating_check": ""
+  },
   "verification_gate": [],
   "review": {
     "external_reviewer": "",

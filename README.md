@@ -9,6 +9,8 @@ Agent Loop OS is a tool-neutral operating system for AI-agent work. It combines 
 - Review the work before calling it done.
 - Remember repeated mistakes so the next task starts wiser.
 
+It also adds diagnostic discipline: start from observed clues, prefer the hypothesis that explains every clue, name confidence, and run the cheapest useful measurement before a risky fix.
+
 Operational data is JSON-first. Markdown is kept for human guides and AI-readable packs, while task state, review records, risk briefs, verification reports, and memory entries have JSON templates.
 
 Coding tasks should stay near 200-300 lines when practical. If a task is expected to exceed 500 lines, Agent Loop OS requires splitting it into smaller tasks before implementation.
@@ -135,6 +137,7 @@ packs/
   memory-ledger.md
   rebuttal-protocol.md
   risk-brief.md
+  diagnostic-discipline.md
 
 templates/
   contract.json

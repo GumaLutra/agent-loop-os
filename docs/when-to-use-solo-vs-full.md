@@ -51,5 +51,7 @@ Escalate when:
 - verification is indirect or weak
 - the task would be hard to undo
 - the agent cannot explain the root cause
+- the leading diagnosis leaves an observed clue unexplained
+- the next fix would be risky before a discriminating check
 - memory shows this task type has repeated failures
 - expected code exceeds 500 lines and needs task splitting

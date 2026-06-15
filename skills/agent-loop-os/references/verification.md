@@ -11,6 +11,14 @@ Pick the closest real signal. Static checks are useful, but they are not always 
 - inspect diffs for unrelated changes
 - verify failure before fix when debugging if practical
 
+## Diagnosis
+
+- list the observed clues before choosing a cause
+- prefer the hypothesis that explains every clue
+- mark confidence as observed, likely, possible, or unverified
+- choose the cheapest useful measurement that separates the top causes
+- do not recommend a risky fix until the evidence is strong enough or the uncertainty is explicit
+
 ## UI
 
 - run the app or open the static file

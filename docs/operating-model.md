@@ -8,6 +8,8 @@ Agent Loop OS combines four layers.
 
 Use conclusion-first communication, clue-first diagnosis, cheap measurement before risky action, and readable explanations.
 
+Diagnosis has its own discipline. Start from observed clues, prefer hypotheses that explain all of them, and mark confidence before recommending a fix. When several causes are plausible, pick the cheapest measurement that separates them instead of listing generic possibilities.
+
 ## 2. Execution Layer
 
 Split large work into small stories. Each meaningful story needs evidence. Evidence can be a test, command output, inspected file, diff, screenshot, log, deployment status, count comparison, or sample check.

@@ -1,6 +1,10 @@
 {
   "made_by": "sudal",
   "goal": "",
+  "observed_clues": [],
+  "leading_hypothesis": "",
+  "confidence": "unverified",
+  "cheapest_discriminating_check": "",
   "checks_run": [],
   "evidence": [],
   "unverified_areas": [],

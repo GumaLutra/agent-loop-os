@@ -31,13 +31,15 @@ Escalate from Solo to Full when the task touches production data, deployment, au
 2. Diagnose from observed clues before proposing fixes.
 3. Prefer the cheapest useful measurement before a risky change.
 4. Do not claim a root cause that was not inspected.
-5. Split large tasks into evidence-backed steps.
-6. Keep coding tasks near 200-300 lines when practical.
-7. Force a task split before implementation if the expected code exceeds 500 lines.
-8. Prefer JSON for operational state, memory, review records, and automation inputs.
-9. Treat every review item as `ACCEPT`, `REJECT`, or `DEFER`.
-10. Verify with the closest real signal available.
-11. Record repeated mistakes as prevention rules.
+5. Prefer the explanation that accounts for every observed clue; if a clue does not fit, lower confidence.
+6. Name confidence and unverified areas before recommending a risky fix.
+7. Split large tasks into evidence-backed steps.
+8. Keep coding tasks near 200-300 lines when practical.
+9. Force a task split before implementation if the expected code exceeds 500 lines.
+10. Prefer JSON for operational state, memory, review records, and automation inputs.
+11. Treat every review item as `ACCEPT`, `REJECT`, or `DEFER`.
+12. Verify with the closest real signal available.
+13. Record repeated mistakes as prevention rules.
 
 ## Standard Workflow
 
@@ -86,6 +88,7 @@ Read only what is needed:
 - `references/review-protocol.md` for reviewer and rebuttal rules.
 - `references/verification.md` for verification gates by task type.
 - `references/memory.md` for memory schema and promotion rules.
+- `packs/diagnostic-discipline.md` when a task needs clue-first diagnosis, calibrated confidence, or cheap discriminating measurements.
 - `scripts/loopos.py` for local `.agent-loop-os` memory and task files.
 - `config/defaults.json` and `templates/*.json` when the user prefers JSON-first operation.
 - `templates/contract.json` and `schemas/contract.schema.json` for implementation contracts.

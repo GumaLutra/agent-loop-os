@@ -17,13 +17,14 @@ TEMPLATES = {
 
         Steps:
         1. Create a short risk brief from relevant memory.
-        2. Plan goal, scope, non-goals, and verification criteria.
-        3. Build the smallest complete change.
-        4. Pause and list evidence.
-        5. Self-review for missed requirements, weak evidence, and repeated mistakes.
-        6. Answer findings with ACCEPT, REJECT, or DEFER.
-        7. Fix accepted findings and verify.
-        8. Update memory only if a prevention rule is useful.
+        2. List observed clues, leading hypothesis, confidence, and the cheapest discriminating check.
+        3. Plan goal, scope, non-goals, and verification criteria.
+        4. Build the smallest complete change.
+        5. Pause and list evidence.
+        6. Self-review for missed requirements, weak evidence, unexplained clues, and repeated mistakes.
+        7. Answer findings with ACCEPT, REJECT, or DEFER.
+        8. Fix accepted findings and verify.
+        9. Update memory only if a prevention rule is useful.
         """,
     "full-review": """\
         Review this work using Agent Loop OS Full Loop.
@@ -32,6 +33,7 @@ TEMPLATES = {
         - bugs or behavioral regressions
         - missed requirements
         - weak or missing verification
+        - diagnoses that do not explain every observed clue
         - repeated mistake patterns
         - risky assumptions
 
@@ -45,6 +47,7 @@ TEMPLATES = {
         Reason:
         Action:
         Verification:
+        Remaining uncertainty:
         Memory update:
         """,
 }

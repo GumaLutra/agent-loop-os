@@ -10,6 +10,9 @@ Use these rules for any AI-agent task that is more than a trivial edit.
 - Diagnose from observed clues before proposing a fix.
 - Prefer the cheapest useful measurement before a risky change.
 - Do not claim a root cause that was not inspected.
+- Prefer hypotheses that explain every observed clue. A likely cause that leaves one clue unexplained is not the lead diagnosis yet.
+- Separate confidence levels: observed, likely, possible, and unverified.
+- When several causes are plausible, name the one measurement that best separates them before changing state.
 - Keep explanations readable; do not compress away important reasoning.
 
 ## Execution

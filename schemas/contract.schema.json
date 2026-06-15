@@ -41,6 +41,16 @@
         "if_exceeded": { "const": "TASK_SPLIT_REQUIRED" },
         "cap_relaxation_allowed": { "const": false }
       }
+    },
+    "diagnosis": {
+      "type": "object",
+      "required": ["observed_clues", "leading_hypothesis", "confidence", "cheapest_discriminating_check"],
+      "properties": {
+        "observed_clues": { "type": "array", "items": { "type": "string" } },
+        "leading_hypothesis": { "type": "string" },
+        "confidence": { "enum": ["observed", "likely", "possible", "unverified"] },
+        "cheapest_discriminating_check": { "type": "string" }
+      }
     }
   }
 }
