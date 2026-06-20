@@ -2,6 +2,8 @@
 
 Made by sudal.
 
+Current version: 0.1.0.
+
 Agent Loop OS is a tool-neutral operating system for AI-agent work. It combines four habits:
 
 - Think clearly before acting.
@@ -10,6 +12,8 @@ Agent Loop OS is a tool-neutral operating system for AI-agent work. It combines 
 - Remember repeated mistakes so the next task starts wiser.
 
 It also adds diagnostic discipline: start from observed clues, prefer the hypothesis that explains every clue, name confidence, and run the cheapest useful measurement before a risky fix.
+
+Version 0.1.0 adds severity-gated loops. Non-critical findings are logged as `LATER` and do not force extra review rounds when the current task is safe to use. Critical findings escalate review rounds and eventually require a user decision if they remain unresolved.
 
 Operational data is JSON-first. Markdown is kept for human guides and AI-readable packs, while task state, review records, risk briefs, verification reports, and memory entries have JSON templates.
 
@@ -52,6 +56,8 @@ Use Agent Loop OS for:
 - any task where "done" needs evidence
 
 For tiny edits, use the lightweight version: state the goal, make the change, verify once, and record memory only if something went wrong.
+
+For tiny or low-risk edits, do not burn tokens on extra rounds. If round 1 passes and remaining findings are non-critical, record them in the later backlog and continue.
 
 ## Quick Start
 
@@ -134,6 +140,7 @@ packs/
   solo-loop.md
   full-loop.md
   verification-gate.md
+  severity-gated-loop.md
   memory-ledger.md
   rebuttal-protocol.md
   risk-brief.md
@@ -148,6 +155,8 @@ templates/
   review-response.md
   review-response.json
   memory-entry.json
+  later-item.md
+  later-item.json
   risk-brief.md
   risk-brief.json
   verification-report.md

@@ -51,6 +51,21 @@
         "confidence": { "enum": ["observed", "likely", "possible", "unverified"] },
         "cheapest_discriminating_check": { "type": "string" }
       }
+    },
+    "review": {
+      "type": "object",
+      "properties": {
+        "external_reviewer": { "type": "string" },
+        "decisions": {
+          "type": "array",
+          "items": { "enum": ["ACCEPT", "REJECT", "DEFER", "LATER"] }
+        },
+        "severity_levels": {
+          "type": "array",
+          "items": { "enum": ["critical", "non-critical"] }
+        },
+        "round_policy": { "type": "string" }
+      }
     }
   }
 }

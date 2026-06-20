@@ -7,6 +7,8 @@
   "cheapest_discriminating_check": "",
   "checks_run": [],
   "evidence": [],
+  "critical_findings_remaining": [],
+  "non_critical_later_items": [],
   "unverified_areas": [],
   "why_remaining_risk_is_acceptable": "",
   "follow_ups": []

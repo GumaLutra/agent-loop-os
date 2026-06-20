@@ -3,15 +3,18 @@
   "summary": {
     "ACCEPT": 0,
     "REJECT": 0,
-    "DEFER": 0
+    "DEFER": 0,
+    "LATER": 0
   },
   "findings": [
     {
       "title": "",
+      "severity": "critical",
       "decision": "ACCEPT",
       "reason": "",
       "action": "",
       "verification": "",
+      "later_log": "",
       "memory_update": ""
     }
   ],

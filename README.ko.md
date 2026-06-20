@@ -2,6 +2,8 @@
 
 Made by sudal.
 
+Current version: 0.1.0.
+
 Agent Loop OS는 AI-agent 작업을 위한 툴 중립 운영체계입니다. 핵심은 네 가지입니다.
 
 - 작업 전에 잘 생각한다.
@@ -10,6 +12,8 @@ Agent Loop OS는 AI-agent 작업을 위한 툴 중립 운영체계입니다. 핵
 - 반복 실수를 기억해서 다음 작업의 위험을 줄인다.
 
 여기에 진단 규율을 더합니다. 관찰된 단서에서 시작하고, 모든 단서를 설명하는 가설을 우선하며, 확신도를 표시하고, 위험한 수정 전에는 가장 싼 감별 확인을 먼저 고릅니다.
+
+0.1.0에서는 severity-gated loop를 추가했습니다. 비치명 이슈는 `LATER`로 기록하고 현재 작업이 실사용 가능하면 추가 리뷰 round를 강제하지 않습니다. 치명 이슈만 다음 round로 올리고, 계속 남으면 사용자 결정으로 넘어갑니다.
 
 운영 데이터는 JSON-first로 둡니다. Markdown은 사람이 읽는 가이드와 AI에게 붙여넣는 pack에 적합하고, task state, review record, risk brief, verification report, memory entry는 JSON 템플릿을 함께 제공합니다.
 
@@ -52,6 +56,7 @@ Planner -> Builder -> External Reviewer -> Rebuttal & Patch -> Verification -> M
 - "완료"에 증거가 필요한 작업
 
 아주 작은 수정에는 가볍게 쓰면 됩니다. 목표를 말하고, 고치고, 한 번 검증하고, 문제가 있었을 때만 memory를 남기세요.
+1round가 통과했고 남은 문제가 비치명이라면 later backlog에 기록하고 다음 단계로 넘어갑니다.
 
 ## 빠른 시작
 
@@ -132,6 +137,7 @@ packs/
   solo-loop.md
   full-loop.md
   verification-gate.md
+  severity-gated-loop.md
   memory-ledger.md
   rebuttal-protocol.md
   risk-brief.md
@@ -146,6 +152,8 @@ templates/
   review-response.md
   review-response.json
   memory-entry.json
+  later-item.md
+  later-item.json
   risk-brief.md
   risk-brief.json
   verification-report.md

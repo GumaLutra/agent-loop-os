@@ -24,6 +24,7 @@ BRAND = "Made by sudal."
 STATE_DIR = ".agent-loop-os"
 MEMORY_FILE = "memory.jsonl"
 EVENTS_FILE = "events.jsonl"
+LATER_FILE = "later.jsonl"
 TASK_DIR = "tasks"
 PREFERRED_MAX_LINES = 300
 HARD_MAX_LINES = 500
@@ -56,6 +57,10 @@ def events_path(args: argparse.Namespace) -> Path:
     return state_path(args) / EVENTS_FILE
 
 
+def later_path(args: argparse.Namespace) -> Path:
+    return state_path(args) / LATER_FILE
+
+
 def ensure_state(args: argparse.Namespace) -> Path:
     state = state_path(args)
     (state / TASK_DIR).mkdir(parents=True, exist_ok=True)
@@ -65,6 +70,9 @@ def ensure_state(args: argparse.Namespace) -> Path:
     events = events_path(args)
     if not events.exists():
         events.write_text("", encoding="utf-8")
+    later = later_path(args)
+    if not later.exists():
+        later.write_text("", encoding="utf-8")
     readme = state / "README.md"
     if not readme.exists():
         readme.write_text(
@@ -78,6 +86,7 @@ def ensure_state(args: argparse.Namespace) -> Path:
 
                 - `memory.jsonl`: one memory entry per line
                 - `events.jsonl`: gate events such as SIZE_LIMIT_EXCEEDED
+                - `later.jsonl`: non-critical findings deferred without blocking the current step
                 - `tasks/`: generated task briefs
 
                 Commit this directory only when your team wants shared process memory.
@@ -88,18 +97,27 @@ def ensure_state(args: argparse.Namespace) -> Path:
     return state
 
 
-def load_memory(args: argparse.Namespace) -> list[dict]:
-    ensure_state(args)
+def load_jsonl(path: Path, label: str) -> list[dict]:
     entries: list[dict] = []
-    for line_number, line in enumerate(memory_path(args).read_text(encoding="utf-8").splitlines(), start=1):
+    for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
         stripped = line.strip()
         if not stripped:
             continue
         try:
             entries.append(json.loads(stripped))
         except json.JSONDecodeError as exc:
-            raise SystemExit(f"Invalid JSON in memory line {line_number}: {exc}") from exc
+            raise SystemExit(f"Invalid JSON in {label} line {line_number}: {exc}") from exc
     return entries
+
+
+def load_memory(args: argparse.Namespace) -> list[dict]:
+    ensure_state(args)
+    return load_jsonl(memory_path(args), "memory")
+
+
+def load_later(args: argparse.Namespace) -> list[dict]:
+    ensure_state(args)
+    return load_jsonl(later_path(args), "later")
 
 
 def append_memory(args: argparse.Namespace, entry: dict) -> None:
@@ -111,6 +129,12 @@ def append_memory(args: argparse.Namespace, entry: dict) -> None:
 def append_event(args: argparse.Namespace, entry: dict) -> None:
     ensure_state(args)
     with events_path(args).open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(entry, ensure_ascii=False, sort_keys=True) + "\n")
+
+
+def append_later(args: argparse.Namespace, entry: dict) -> None:
+    ensure_state(args)
+    with later_path(args).open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(entry, ensure_ascii=False, sort_keys=True) + "\n")
 
 
@@ -218,14 +242,23 @@ def cmd_risk(args: argparse.Namespace) -> int:
     entries = load_memory(args)
     relevant = [entry for entry in entries if args.type == "all" or entry.get("task_type") == args.type]
     relevant = relevant[-args.limit :]
+    later_items = [
+        entry
+        for entry in load_later(args)
+        if entry.get("status", "open") == "open" and (args.type == "all" or entry.get("task_type") == args.type)
+    ]
 
     print("Risk brief")
     print(BRAND)
     print(f"Task type: {args.type}")
+    if later_items:
+        print(f"Open later items: {len(later_items)}")
 
     if not relevant:
         print("- No relevant memory found.")
         print("- Use the standard verification gate for this task type.")
+        if later_items:
+            print("- Review open later items when the current task has slack.")
         return 0
 
     counts = Counter(entry.get("mistake_type", "unknown") for entry in relevant)
@@ -242,6 +275,10 @@ def cmd_risk(args: argparse.Namespace) -> int:
             seen.add(lesson)
         if len(seen) >= 5:
             break
+    if later_items:
+        print("\nLater backlog:")
+        for item in later_items[-5:]:
+            print(f"- [{item.get('task_type')}] {item.get('finding')} ({item.get('impact')})")
     return 0
 
 
@@ -283,6 +320,50 @@ def cmd_memory_list(args: argparse.Namespace) -> int:
         print(f"- [{entry.get('task_type')}] {entry.get('mistake_type')}: {entry.get('lesson')}")
         if entry.get("evidence"):
             print(f"  evidence: {entry.get('evidence')}")
+    return 0
+
+
+def cmd_later_add(args: argparse.Namespace) -> int:
+    entry = {
+        "date": now_iso(),
+        "task_type": args.type,
+        "finding": args.finding,
+        "impact": args.impact,
+        "reason_deferred": args.reason,
+        "suggested_fix": args.suggested_fix or "",
+        "status": "open",
+        "severity": "non-critical",
+        "task": args.task or "",
+        "made_by": "sudal",
+    }
+    append_later(args, entry)
+    print("Added later item:")
+    print(json.dumps(entry, ensure_ascii=False, indent=2, sort_keys=True))
+    return 0
+
+
+def cmd_later_list(args: argparse.Namespace) -> int:
+    entries = load_later(args)
+    if args.type != "all":
+        entries = [entry for entry in entries if entry.get("task_type") == args.type]
+    if args.status != "all":
+        entries = [entry for entry in entries if entry.get("status", "open") == args.status]
+    entries = entries[-args.limit :]
+
+    if args.json:
+        print(json.dumps(entries, ensure_ascii=False, indent=2, sort_keys=True))
+        return 0
+
+    if not entries:
+        print("No later items found.")
+        return 0
+
+    for entry in entries:
+        print(f"- [{entry.get('status', 'open')}] [{entry.get('task_type')}] {entry.get('finding')}")
+        if entry.get("impact"):
+            print(f"  impact: {entry.get('impact')}")
+        if entry.get("suggested_fix"):
+            print(f"  suggested_fix: {entry.get('suggested_fix')}")
     return 0
 
 
@@ -346,6 +427,24 @@ def build_parser() -> argparse.ArgumentParser:
     memory_list.add_argument("--limit", type=int, default=20)
     memory_list.add_argument("--json", action="store_true")
     memory_list.set_defaults(func=cmd_memory_list)
+
+    later_parser = subparsers.add_parser("later", help="Non-critical later backlog helpers.")
+    later_sub = later_parser.add_subparsers(dest="later_command", required=True)
+    later_add = later_sub.add_parser("add", help="Append a non-critical later item.")
+    later_add.add_argument("--type", required=True)
+    later_add.add_argument("--finding", required=True)
+    later_add.add_argument("--impact", required=True)
+    later_add.add_argument("--reason", required=True)
+    later_add.add_argument("--suggested-fix", default="")
+    later_add.add_argument("--task", default="")
+    later_add.set_defaults(func=cmd_later_add)
+
+    later_list = later_sub.add_parser("list", help="List non-critical later items.")
+    later_list.add_argument("--type", default="all")
+    later_list.add_argument("--status", choices=["open", "closed", "all"], default="open")
+    later_list.add_argument("--limit", type=int, default=20)
+    later_list.add_argument("--json", action="store_true")
+    later_list.set_defaults(func=cmd_later_list)
 
     template_parser = subparsers.add_parser("template", help="Print copy-paste prompts.")
     template_parser.add_argument("name", choices=["solo", "full-review", "rebuttal"])

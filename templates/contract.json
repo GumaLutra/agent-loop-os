@@ -31,7 +31,9 @@
   "verification_gate": [],
   "review": {
     "external_reviewer": "",
-    "decisions": ["ACCEPT", "REJECT", "DEFER"]
+    "decisions": ["ACCEPT", "REJECT", "DEFER", "LATER"],
+    "severity_levels": ["critical", "non-critical"],
+    "round_policy": "non-critical findings are logged later; only critical findings force extra rounds"
   },
   "memory_update": {
     "required_when_repeated_mistake": true,

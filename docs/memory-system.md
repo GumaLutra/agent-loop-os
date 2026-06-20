@@ -12,6 +12,14 @@ The CLI stores local memory in:
 .agent-loop-os/memory.jsonl
 ```
 
+Non-critical findings that should not block the current task are stored separately:
+
+```text
+.agent-loop-os/later.jsonl
+```
+
+Use later items for small, safe-to-use issues that should be batched later. Promote them to memory only when they repeat or should change future behavior.
+
 Each line is one JSON object. JSONL is easy to append, diff, search, and move between tools.
 
 ## Entry Fields

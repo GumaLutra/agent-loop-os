@@ -23,6 +23,7 @@ Planner -> Builder -> External Reviewer -> Rebuttal & Patch -> Verification -> M
 - Find actionable defects, not style preferences.
 - Focus on bugs, missed requirements, missing verification, risky assumptions, and repeated mistakes.
 - Order findings by severity.
+- Mark each finding as `critical` or `non-critical`.
 - Say when no material issue was found.
 
 ## Rebuttal Responsibilities
@@ -33,12 +34,16 @@ For each review finding:
 ACCEPT: valid; fixed; verification evidence.
 REJECT: invalid; evidence from code/log/test/requirement.
 DEFER: valid but out of scope; concrete follow-up.
+LATER: non-critical; safe to use now; recorded in later backlog.
 ```
+
+Only critical findings force another review round. Non-critical findings should be logged as `LATER` when verification passes and the requested workflow is safe to use.
 
 ## Finish
 
 The final response must include:
 
 - accepted/rejected/deferred counts
+- later count
 - verification evidence
 - memory updates or "No new repeated mistake"

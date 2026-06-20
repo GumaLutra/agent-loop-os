@@ -7,6 +7,8 @@ description: Tool-neutral AI-agent operating workflow for risky or non-trivial t
 
 Made by sudal.
 
+Current version: 0.1.0.
+
 Use Agent Loop OS to avoid shallow completion. The work is not done until the agent can show evidence, review the result, answer review items, verify the final state, and record any repeated mistake worth preventing next time.
 
 ## Choose Mode
@@ -38,8 +40,11 @@ Escalate from Solo to Full when the task touches production data, deployment, au
 9. Force a task split before implementation if the expected code exceeds 500 lines.
 10. Prefer JSON for operational state, memory, review records, and automation inputs.
 11. Treat every review item as `ACCEPT`, `REJECT`, or `DEFER`.
-12. Verify with the closest real signal available.
-13. Record repeated mistakes as prevention rules.
+12. Classify each finding as `critical` or `non-critical` before spending another review round.
+13. Log non-critical findings as `LATER` and continue when round 1 passes and the current task is safe to use.
+14. Escalate extra rounds only for critical findings.
+15. Verify with the closest real signal available.
+16. Record repeated mistakes as prevention rules.
 
 ## Standard Workflow
 
@@ -63,12 +68,17 @@ Escalate from Solo to Full when the task touches production data, deployment, au
 4. **Review**
    - Solo: switch into self-reviewer mode and inspect the work as if someone else wrote it.
    - Full: ask the external reviewer to find bugs, missed requirements, weak evidence, and missing tests.
+   - Classify each finding as critical or non-critical.
 
 5. **Rebuttal**
    - For each review item:
      - `ACCEPT`: fix it and verify.
      - `REJECT`: explain with evidence.
      - `DEFER`: acknowledge but keep outside current scope.
+     - `LATER`: non-critical, safe to use now, recorded in the later backlog.
+   - If round 1 passes and only non-critical findings remain, log `LATER` items and continue.
+   - If critical findings remain after round 2, ask the user before spending round 3.
+   - If critical findings remain after rounds 4-5, stop and ask the user for a decision.
 
 6. **Verification Gate**
    - Run the best available checks before completion.
@@ -89,6 +99,7 @@ Read only what is needed:
 - `references/verification.md` for verification gates by task type.
 - `references/memory.md` for memory schema and promotion rules.
 - `packs/diagnostic-discipline.md` when a task needs clue-first diagnosis, calibrated confidence, or cheap discriminating measurements.
+- `packs/severity-gated-loop.md` when findings should be logged for later instead of forcing extra rounds.
 - `scripts/loopos.py` for local `.agent-loop-os` memory and task files.
 - `config/defaults.json` and `templates/*.json` when the user prefers JSON-first operation.
 - `templates/contract.json` and `schemas/contract.schema.json` for implementation contracts.

@@ -22,9 +22,11 @@ TEMPLATES = {
         4. Build the smallest complete change.
         5. Pause and list evidence.
         6. Self-review for missed requirements, weak evidence, unexplained clues, and repeated mistakes.
-        7. Answer findings with ACCEPT, REJECT, or DEFER.
-        8. Fix accepted findings and verify.
-        9. Update memory only if a prevention rule is useful.
+        7. Classify findings as critical or non-critical.
+        8. Answer findings with ACCEPT, REJECT, DEFER, or LATER.
+        9. If only non-critical findings remain and verification passes, log them as LATER and continue.
+        10. Fix accepted critical findings and verify.
+        11. Update memory only if a prevention rule is useful.
         """,
     "full-review": """\
         Review this work using Agent Loop OS Full Loop.
@@ -34,6 +36,7 @@ TEMPLATES = {
         - missed requirements
         - weak or missing verification
         - diagnoses that do not explain every observed clue
+        - critical vs non-critical severity
         - repeated mistake patterns
         - risky assumptions
 
@@ -43,11 +46,13 @@ TEMPLATES = {
         For each review finding, answer:
 
         Finding:
-        Decision: ACCEPT | REJECT | DEFER
+        Severity: critical | non-critical
+        Decision: ACCEPT | REJECT | DEFER | LATER
         Reason:
         Action:
         Verification:
         Remaining uncertainty:
+        Later log:
         Memory update:
         """,
 }

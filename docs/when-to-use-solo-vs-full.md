@@ -23,6 +23,8 @@ Good for:
 
 Solo is cheaper and faster, but the review is not truly independent. Compensate with memory, explicit self-review, and a real verification gate.
 
+If Solo round 1 passes and only non-critical findings remain, log them as `LATER` and continue. Do not escalate to Full only for polish or low-impact cleanup.
+
 ## Use Full Loop OS
 
 Use Full when another AI, tool, or human can review.
@@ -42,6 +44,8 @@ Good for:
 - repeated mistakes from memory
 
 Full is slower, but it gives you an independent pressure test.
+
+Use Full for critical findings. If a Full review finds only non-critical issues and verification passes, record them in the later backlog and move on.
 
 ## Escalate From Solo To Full
 

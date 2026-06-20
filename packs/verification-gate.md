@@ -12,6 +12,8 @@ Evidence collected:
 Checks run:
 Known unverified areas:
 Reason unverified areas are acceptable:
+Critical findings remaining:
+Non-critical findings logged for later:
 ```
 
 ## UI Gate
