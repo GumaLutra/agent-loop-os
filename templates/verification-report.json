@@ -6,6 +6,7 @@
   "confidence": "unverified",
   "cheapest_discriminating_check": "",
   "checks_run": [],
+  "review_gate_status": "PASS",
   "evidence": [],
   "critical_findings_remaining": [],
   "non_critical_later_items": [],

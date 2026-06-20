@@ -7,7 +7,7 @@ description: Tool-neutral AI-agent operating workflow for risky or non-trivial t
 
 Made by sudal.
 
-Current version: 0.1.0.
+Current version: 0.1.1.
 
 Use Agent Loop OS to avoid shallow completion. The work is not done until the agent can show evidence, review the result, answer review items, verify the final state, and record any repeated mistake worth preventing next time.
 
@@ -16,13 +16,13 @@ Use Agent Loop OS to avoid shallow completion. The work is not done until the ag
 Use **Solo Loop OS** when only one AI agent is available.
 
 ```text
-Builder -> Evidence -> Self-Reviewer -> Rebuttal -> Fix -> Verification -> Memory
+Builder -> Tests -> Self-Reviewer -> PASS or REVISION_REQUIRED -> Rebuttal -> Fix -> Verification -> Memory
 ```
 
 Use **Full Loop OS** when another model, tool, thread, or human can review.
 
 ```text
-Planner -> Builder -> External Reviewer -> Rebuttal & Patch -> Verification -> Memory
+Planner -> Builder -> Tests -> External Reviewer -> PASS or REVISION_REQUIRED -> Rebuttal & Patch -> Verification -> Memory
 ```
 
 Escalate from Solo to Full when the task touches production data, deployment, auth, payment, security, destructive changes, unclear bugs, or a repeated failure pattern.
@@ -43,8 +43,12 @@ Escalate from Solo to Full when the task touches production data, deployment, au
 12. Classify each finding as `critical` or `non-critical` before spending another review round.
 13. Log non-critical findings as `LATER` and continue when round 1 passes and the current task is safe to use.
 14. Escalate extra rounds only for critical findings.
-15. Verify with the closest real signal available.
-16. Record repeated mistakes as prevention rules.
+15. Run tests or the closest practical verification before Claude or external review.
+16. Treat review status as `PASS` or `REVISION_REQUIRED`.
+17. On `PASS`, continue to the next step.
+18. On `REVISION_REQUIRED`, classify severity before choosing a fix loop or later backlog.
+19. Verify with the closest real signal available.
+20. Record repeated mistakes as prevention rules.
 
 ## Standard Workflow
 
@@ -64,10 +68,13 @@ Escalate from Solo to Full when the task touches production data, deployment, au
    - Keep evidence from commands, diffs, screenshots, logs, tests, or inspected files.
    - Before external review, run `python scripts/loopos.py size check`.
    - If the gate emits `SIZE_LIMIT_EXCEEDED`, stop and split the task. Do not relax the cap.
+   - Run tests or the closest practical verification before Claude or another reviewer.
 
-4. **Review**
+4. **Review Gate**
    - Solo: switch into self-reviewer mode and inspect the work as if someone else wrote it.
    - Full: ask the external reviewer to find bugs, missed requirements, weak evidence, and missing tests.
+   - Return `PASS` when tests or verification passed and no critical issue remains.
+   - Return `REVISION_REQUIRED` when a critical issue, failed test, or risky verification gap remains.
    - Classify each finding as critical or non-critical.
 
 5. **Rebuttal**
@@ -76,6 +83,8 @@ Escalate from Solo to Full when the task touches production data, deployment, au
      - `REJECT`: explain with evidence.
      - `DEFER`: acknowledge but keep outside current scope.
      - `LATER`: non-critical, safe to use now, recorded in the later backlog.
+   - If the review gate is `PASS`, continue to the next step.
+   - If the review gate is `REVISION_REQUIRED`, fix critical findings only and verify again.
    - If round 1 passes and only non-critical findings remain, log `LATER` items and continue.
    - If critical findings remain after round 2, ask the user before spending round 3.
    - If critical findings remain after rounds 4-5, stop and ask the user for a decision.
@@ -100,6 +109,7 @@ Read only what is needed:
 - `references/memory.md` for memory schema and promotion rules.
 - `packs/diagnostic-discipline.md` when a task needs clue-first diagnosis, calibrated confidence, or cheap discriminating measurements.
 - `packs/severity-gated-loop.md` when findings should be logged for later instead of forcing extra rounds.
+- `packs/review-gate-pipeline.md` when tests, Claude review, `PASS`, and `REVISION_REQUIRED` need a single operating flow.
 - `scripts/loopos.py` for local `.agent-loop-os` memory and task files.
 - `config/defaults.json` and `templates/*.json` when the user prefers JSON-first operation.
 - `templates/contract.json` and `schemas/contract.schema.json` for implementation contracts.

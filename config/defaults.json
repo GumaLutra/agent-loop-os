@@ -1,6 +1,6 @@
 {
   "made_by": "sudal",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "format_preference": {
     "operational_data": "json",
     "human_guides": "markdown",
@@ -25,6 +25,15 @@
     "if_exceeded": "TASK_SPLIT_REQUIRED"
   },
   "loop_modes": ["solo", "full"],
+  "review_gate_statuses": ["PASS", "REVISION_REQUIRED"],
+  "review_gate_pipeline": {
+    "first": "run_tests_or_closest_verification",
+    "second": "run_claude_or_external_review",
+    "pass": "continue_to_next_step",
+    "revision_required": "classify_findings_by_severity",
+    "non_critical": "log_later_and_continue_if_safe",
+    "critical": "fix_loop_then_verify_again"
+  },
   "review_decisions": ["ACCEPT", "REJECT", "DEFER", "LATER"],
   "severity_levels": ["critical", "non-critical"],
   "round_policy": {

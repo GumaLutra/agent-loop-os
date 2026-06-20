@@ -2,6 +2,12 @@
 
 Made by sudal.
 
+## 0.1.1 - 2026-06-21
+
+- Added the review gate pipeline: run tests, run Claude or external review, continue on `PASS`, and classify `REVISION_REQUIRED` findings by severity.
+- Clarified that non-critical `REVISION_REQUIRED` findings go to the later backlog while only critical findings enter the fix loop.
+- Added AI-facing instructions and templates for `PASS` vs `REVISION_REQUIRED` review status.
+
 ## 0.1.0 - 2026-06-21
 
 - Added severity-gated loop policy: non-critical findings are logged as `LATER` and do not force extra review rounds when the current task is safe to use.

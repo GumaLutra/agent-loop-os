@@ -4,6 +4,8 @@ Made by sudal.
 
 ## Summary
 
+Gate status: PASS | REVISION_REQUIRED
+
 ACCEPT:
 REJECT:
 DEFER:
@@ -31,4 +33,3 @@ Memory update:
 
 
 ## Remaining Risk
-

@@ -4,6 +4,8 @@ Made by sudal.
 
 Use this pack when review rounds could consume more time or tokens than the remaining risk deserves.
 
+For the general test-and-review flow, pair this with `review-gate-pipeline.md`.
+
 ## Principle
 
 Do not spend extra review rounds on non-critical findings. If the current task is safe to use and verification passes, log non-critical findings as `LATER` and move to the next step. Escalate rounds only for critical findings.

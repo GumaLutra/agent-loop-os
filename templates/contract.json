@@ -31,6 +31,7 @@
   "verification_gate": [],
   "review": {
     "external_reviewer": "",
+    "gate_statuses": ["PASS", "REVISION_REQUIRED"],
     "decisions": ["ACCEPT", "REJECT", "DEFER", "LATER"],
     "severity_levels": ["critical", "non-critical"],
     "round_policy": "non-critical findings are logged later; only critical findings force extra rounds"

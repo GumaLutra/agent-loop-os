@@ -56,6 +56,10 @@
       "type": "object",
       "properties": {
         "external_reviewer": { "type": "string" },
+        "gate_statuses": {
+          "type": "array",
+          "items": { "enum": ["PASS", "REVISION_REQUIRED"] }
+        },
         "decisions": {
           "type": "array",
           "items": { "enum": ["ACCEPT", "REJECT", "DEFER", "LATER"] }
