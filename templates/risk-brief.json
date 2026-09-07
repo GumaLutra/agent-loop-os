@@ -4,7 +4,11 @@
   "task": "",
   "relevant_memory_ids": [],
   "top_risks": [],
+  "observed_clues": [],
+  "leading_hypothesis": "",
+  "confidence": "unverified",
   "cheapest_useful_measurement": "",
+  "open_later_items": [],
   "required_verification_gate": "",
   "memory_rules_to_apply": []
 }

@@ -2,12 +2,20 @@
 
 Made by sudal.
 
+Current version: 0.1.2.
+
 Agent Loop OS는 AI-agent 작업을 위한 툴 중립 운영체계입니다. 핵심은 네 가지입니다.
 
 - 작업 전에 잘 생각한다.
 - 큰 작업은 증거 기반 단계로 쪼갠다.
 - 완료 전에 리뷰하고 검증한다.
 - 반복 실수를 기억해서 다음 작업의 위험을 줄인다.
+
+여기에 진단 규율을 더합니다. 관찰된 단서에서 시작하고, 모든 단서를 설명하는 가설을 우선하며, 확신도를 표시하고, 위험한 수정 전에는 가장 싼 감별 확인을 먼저 고릅니다.
+
+0.1.0에서는 severity-gated loop를 추가했습니다. 비치명 이슈는 `LATER`로 기록하고 현재 작업이 실사용 가능하면 추가 리뷰 round를 강제하지 않습니다. 치명 이슈만 다음 round로 올리고, 계속 남으면 사용자 결정으로 넘어갑니다.
+
+0.1.1에서는 이 규칙을 review gate pipeline으로 일반화했습니다. 테스트를 실행하고, Claude나 외부 검토를 실행한 뒤, `PASS`면 다음 단계로 진행합니다. `REVISION_REQUIRED`면 치명/비치명을 먼저 나누고, 비치명은 later backlog에 기록하며, 치명만 수정 루프에 넣습니다.
 
 운영 데이터는 JSON-first로 둡니다. Markdown은 사람이 읽는 가이드와 AI에게 붙여넣는 pack에 적합하고, task state, review record, risk brief, verification report, memory entry는 JSON 템플릿을 함께 제공합니다.
 
@@ -50,6 +58,16 @@ Planner -> Builder -> External Reviewer -> Rebuttal & Patch -> Verification -> M
 - "완료"에 증거가 필요한 작업
 
 아주 작은 수정에는 가볍게 쓰면 됩니다. 목표를 말하고, 고치고, 한 번 검증하고, 문제가 있었을 때만 memory를 남기세요.
+1round가 통과했고 남은 문제가 비치명이라면 later backlog에 기록하고 다음 단계로 넘어갑니다.
+
+일반 구현 작업은 다음 pipeline을 따릅니다.
+
+```text
+테스트 실행 -> Claude 검토 실행 -> PASS -> 다음 단계
+테스트 실행 -> Claude 검토 실행 -> REVISION_REQUIRED -> 치명도 분류
+비치명 -> Later Backlog -> 다음 단계
+치명 -> 수정 루프 -> 다시 검증
+```
 
 ## 빠른 시작
 
@@ -130,9 +148,12 @@ packs/
   solo-loop.md
   full-loop.md
   verification-gate.md
+  severity-gated-loop.md
+  review-gate-pipeline.md
   memory-ledger.md
   rebuttal-protocol.md
   risk-brief.md
+  diagnostic-discipline.md
 
 templates/
   contract.json
@@ -143,6 +164,8 @@ templates/
   review-response.md
   review-response.json
   memory-entry.json
+  later-item.md
+  later-item.json
   risk-brief.md
   risk-brief.json
   verification-report.md
@@ -181,3 +204,9 @@ Made by sudal.
 ```
 
 MIT 라이선스도 주요 복사본에 저작권 고지를 유지하도록 요구합니다.
+
+## 작업 전환 시 자동 회상 (0.1.2)
+
+회상 도구는 정확한 프로젝트 경로를 기준으로 작업 메모를 최대 세 개까지 찾습니다. 세션 시작 또는 프롬프트 제출 훅에 연결하면, 에이전트가 관련 결정과 진행 상황을 다시 확인하도록 안내합니다. 대화 원문을 수집하거나 메모 본문을 외부로 전송하지 않으며, 저장소에 접근할 수 없으면 그 상태를 알립니다.
+
+설정과 종료 기준은 [인수인계 안내](skills/agent-loop-os/references/handoff.md)를 참고하세요. 훅은 회상 안내를 자동으로 전달하지만, 에이전트의 실제 메모 읽기와 저장까지 보장하지는 않습니다.

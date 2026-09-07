@@ -23,6 +23,8 @@ Good for:
 
 Solo is cheaper and faster, but the review is not truly independent. Compensate with memory, explicit self-review, and a real verification gate.
 
+If Solo round 1 passes and only non-critical findings remain, log them as `LATER` and continue. Do not escalate to Full only for polish or low-impact cleanup.
+
 ## Use Full Loop OS
 
 Use Full when another AI, tool, or human can review.
@@ -43,6 +45,8 @@ Good for:
 
 Full is slower, but it gives you an independent pressure test.
 
+Use Full for critical findings. If a Full review finds only non-critical issues and verification passes, record them in the later backlog and move on.
+
 ## Escalate From Solo To Full
 
 Escalate when:
@@ -51,5 +55,7 @@ Escalate when:
 - verification is indirect or weak
 - the task would be hard to undo
 - the agent cannot explain the root cause
+- the leading diagnosis leaves an observed clue unexplained
+- the next fix would be risky before a discriminating check
 - memory shows this task type has repeated failures
 - expected code exceeds 500 lines and needs task splitting

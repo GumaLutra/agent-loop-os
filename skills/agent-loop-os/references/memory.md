@@ -26,6 +26,7 @@ Record:
 - dangerous assumptions
 - missing verification that caused rework
 - review findings likely to recur
+- non-critical findings that are safe to use now but should be batched later
 - prevention rules that are short and actionable
 
 Do not record:
@@ -41,6 +42,8 @@ Do not record:
 - 2 occurrences: include in future risk briefs.
 - 3 occurrences: turn into a standard verification rule.
 - recurrence after a rule exists: strengthen the gate or add a checklist item.
+
+Use the later backlog for non-critical issues that should not block the current task. Promote a later item to memory only when it repeats or should change future behavior.
 
 ## Risk Brief Rule
 

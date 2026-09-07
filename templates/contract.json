@@ -22,10 +22,19 @@
     "cap_relaxation_allowed": false
   },
   "evidence_required": [],
+  "diagnosis": {
+    "observed_clues": [],
+    "leading_hypothesis": "",
+    "confidence": "unverified",
+    "cheapest_discriminating_check": ""
+  },
   "verification_gate": [],
   "review": {
     "external_reviewer": "",
-    "decisions": ["ACCEPT", "REJECT", "DEFER"]
+    "gate_statuses": ["PASS", "REVISION_REQUIRED"],
+    "decisions": ["ACCEPT", "REJECT", "DEFER", "LATER"],
+    "severity_levels": ["critical", "non-critical"],
+    "round_policy": "non-critical findings are logged later; only critical findings force extra rounds"
   },
   "memory_update": {
     "required_when_repeated_mistake": true,

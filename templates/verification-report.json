@@ -1,8 +1,15 @@
 {
   "made_by": "sudal",
   "goal": "",
+  "observed_clues": [],
+  "leading_hypothesis": "",
+  "confidence": "unverified",
+  "cheapest_discriminating_check": "",
   "checks_run": [],
+  "review_gate_status": "PASS",
   "evidence": [],
+  "critical_findings_remaining": [],
+  "non_critical_later_items": [],
   "unverified_areas": [],
   "why_remaining_risk_is_acceptable": "",
   "follow_ups": []

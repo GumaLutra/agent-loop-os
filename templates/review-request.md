@@ -19,6 +19,8 @@ Full Loop OS
 
 ## Verification Already Run
 
+## Test Results
+
 
 ## Known Limitations
 
@@ -32,5 +34,11 @@ Focus on:
 - weak or missing verification
 - repeated mistake patterns
 - risky assumptions
+
+Return gate status: `PASS` or `REVISION_REQUIRED`.
+
+Use `PASS` when tests or the closest practical verification passed and no critical issue remains.
+
+Use `REVISION_REQUIRED` when a critical issue, failed test, or risky verification gap remains.
 
 Return actionable findings ordered by severity. Say clearly if no material issue is found.

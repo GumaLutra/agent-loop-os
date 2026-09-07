@@ -12,6 +12,8 @@ Evidence collected:
 Checks run:
 Known unverified areas:
 Reason unverified areas are acceptable:
+Critical findings remaining:
+Non-critical findings logged for later:
 ```
 
 ## UI Gate
@@ -41,6 +43,9 @@ Reason unverified areas are acceptable:
 ## Debug Gate
 
 - Reproduce or explain why reproduction is not available.
-- Identify the root cause with evidence.
+- List the observed clues before naming the root cause.
+- Identify the root cause with evidence, or mark it as likely/possible/unverified.
+- Show why the leading hypothesis explains every clue. If one clue does not fit, name the gap.
+- Run or name the cheapest discriminating check before a risky fix.
 - Show why the fix addresses the cause, not only the symptom.
 - Add or run a regression check when possible.

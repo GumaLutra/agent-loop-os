@@ -23,6 +23,9 @@
   },
   "risk_brief": {
     "top_risks": [],
+    "observed_clues": [],
+    "leading_hypothesis": "",
+    "confidence": "unverified",
     "cheapest_useful_measurement": "",
     "required_verification_gate": ""
   },
@@ -35,5 +38,10 @@
     }
   ],
   "verification_criteria": [],
-  "completion_evidence": []
+  "completion_evidence": [],
+  "project_root": "",
+  "task_id": "",
+  "fixed_decisions": [],
+  "handoff_note": "",
+  "next_action": ""
 }

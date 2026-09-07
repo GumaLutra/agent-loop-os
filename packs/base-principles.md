@@ -10,6 +10,9 @@ Use these rules for any AI-agent task that is more than a trivial edit.
 - Diagnose from observed clues before proposing a fix.
 - Prefer the cheapest useful measurement before a risky change.
 - Do not claim a root cause that was not inspected.
+- Prefer hypotheses that explain every observed clue. A likely cause that leaves one clue unexplained is not the lead diagnosis yet.
+- Separate confidence levels: observed, likely, possible, and unverified.
+- When several causes are plausible, name the one measurement that best separates them before changing state.
 - Keep explanations readable; do not compress away important reasoning.
 
 ## Execution
@@ -27,7 +30,10 @@ Use these rules for any AI-agent task that is more than a trivial edit.
 
 - Use Solo Loop when only one agent is available.
 - Use Full Loop when an external reviewer is available or risk is high.
-- Classify every review item as `ACCEPT`, `REJECT`, or `DEFER`.
+- Classify every review item by severity before deciding what to do.
+- Classify decisions as `ACCEPT`, `REJECT`, `DEFER`, or `LATER`.
+- Log non-critical findings as `LATER` when the current task is safe to use and verification passes.
+- Spend extra rounds only on critical findings.
 - Fix accepted items and verify again.
 
 ## Memory

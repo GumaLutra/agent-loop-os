@@ -8,6 +8,35 @@ Agent Loop OS combines four layers.
 
 Use conclusion-first communication, clue-first diagnosis, cheap measurement before risky action, and readable explanations.
 
+Diagnosis has its own discipline. Start from observed clues, prefer hypotheses that explain all of them, and mark confidence before recommending a fix. When several causes are plausible, pick the cheapest measurement that separates them instead of listing generic possibilities.
+
+## 0.1.1 Review Gate Pipeline
+
+The general loop is:
+
+```text
+Run tests -> Run Claude/external review -> PASS -> next step
+Run tests -> Run Claude/external review -> REVISION_REQUIRED -> classify severity
+non-critical -> later backlog -> next step
+critical -> fix loop -> verify again
+```
+
+`PASS` means tests or the closest practical verification passed and no critical review issue remains. `REVISION_REQUIRED` means a test failed, verification is missing for a risky change, or a critical review issue remains.
+
+## 0.1.0 Severity-Gated Rounds
+
+Agent Loop OS does not require extra rounds for every finding. Non-critical findings are recorded as later work when the current task is safe to use and verification passes. Critical findings are the only reason to spend another round.
+
+The default escalation is:
+
+```text
+1round non-critical only -> later log -> next step
+1round critical -> 2round -> passed -> next step
+2round critical remains -> user decision before 3round
+3round critical remains -> 4round/5round only with user direction
+5round unresolved -> stop for user decision
+```
+
 ## 2. Execution Layer
 
 Split large work into small stories. Each meaningful story needs evidence. Evidence can be a test, command output, inspected file, diff, screenshot, log, deployment status, count comparison, or sample check.
@@ -42,7 +71,7 @@ Do not loosen the cap. Split the work into smaller tasks.
 
 ## 3. Review Layer
 
-Use Solo Loop when one AI is available. Use Full Loop when another reviewer is available or risk is high. Every review item must be answered with `ACCEPT`, `REJECT`, or `DEFER`.
+Use Solo Loop when one AI is available. Use Full Loop when another reviewer is available or risk is high. Every review item must be labeled by severity and answered with `ACCEPT`, `REJECT`, `DEFER`, or `LATER`.
 
 ## 4. Memory Layer
 

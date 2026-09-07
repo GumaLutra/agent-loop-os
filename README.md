@@ -2,12 +2,20 @@
 
 Made by sudal.
 
+Current version: 0.1.2.
+
 Agent Loop OS is a tool-neutral operating system for AI-agent work. It combines four habits:
 
 - Think clearly before acting.
 - Break large work into evidence-backed steps.
 - Review the work before calling it done.
 - Remember repeated mistakes so the next task starts wiser.
+
+It also adds diagnostic discipline: start from observed clues, prefer the hypothesis that explains every clue, name confidence, and run the cheapest useful measurement before a risky fix.
+
+Version 0.1.0 adds severity-gated loops. Non-critical findings are logged as `LATER` and do not force extra review rounds when the current task is safe to use. Critical findings escalate review rounds and eventually require a user decision if they remain unresolved.
+
+Version 0.1.1 generalizes that rule into a review gate pipeline: run tests, run Claude or another external review, continue automatically on `PASS`, and only enter a fix loop for critical `REVISION_REQUIRED` findings. Non-critical findings are recorded in the later backlog.
 
 Operational data is JSON-first. Markdown is kept for human guides and AI-readable packs, while task state, review records, risk briefs, verification reports, and memory entries have JSON templates.
 
@@ -50,6 +58,17 @@ Use Agent Loop OS for:
 - any task where "done" needs evidence
 
 For tiny edits, use the lightweight version: state the goal, make the change, verify once, and record memory only if something went wrong.
+
+For tiny or low-risk edits, do not burn tokens on extra rounds. If round 1 passes and remaining findings are non-critical, record them in the later backlog and continue.
+
+For ordinary implementation work, use the review gate pipeline:
+
+```text
+Run tests -> Run Claude review -> PASS -> next step
+Run tests -> Run Claude review -> REVISION_REQUIRED -> classify severity
+non-critical -> Later Backlog -> next step
+critical -> fix loop -> verify again
+```
 
 ## Quick Start
 
@@ -132,9 +151,12 @@ packs/
   solo-loop.md
   full-loop.md
   verification-gate.md
+  severity-gated-loop.md
+  review-gate-pipeline.md
   memory-ledger.md
   rebuttal-protocol.md
   risk-brief.md
+  diagnostic-discipline.md
 
 templates/
   contract.json
@@ -145,6 +167,8 @@ templates/
   review-response.md
   review-response.json
   memory-entry.json
+  later-item.md
+  later-item.json
   risk-brief.md
   risk-brief.json
   verification-report.md
@@ -183,3 +207,13 @@ Made by sudal.
 ```
 
 The MIT license also requires the copyright notice to remain in substantial copies.
+
+## Automatic handoff recall (0.1.2)
+
+The read-only recall helper discovers up to three task notes by exact project root.
+Install it as a SessionStart/UserPromptSubmit hook to remind agents to retrieve
+relevant decisions and save progress without asking the user to remember.
+It never reads transcripts or uploads note bodies. Missing storage is reported.
+See [handoff and bounded review](skills/agent-loop-os/references/handoff.md).
+
+Run checks with `python3 -m unittest discover -s tests`.
