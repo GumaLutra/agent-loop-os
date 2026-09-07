@@ -1,6 +1,6 @@
 {
   "made_by": "sudal",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "format_preference": {
     "operational_data": "json",
     "human_guides": "markdown",
@@ -24,8 +24,14 @@
     "measurement": "git diff --numstat staged + unstaged added/deleted lines",
     "if_exceeded": "TASK_SPLIT_REQUIRED"
   },
-  "loop_modes": ["solo", "full"],
-  "review_gate_statuses": ["PASS", "REVISION_REQUIRED"],
+  "loop_modes": [
+    "solo",
+    "full"
+  ],
+  "review_gate_statuses": [
+    "PASS",
+    "REVISION_REQUIRED"
+  ],
   "review_gate_pipeline": {
     "first": "run_tests_or_closest_verification",
     "second": "run_claude_or_external_review",
@@ -34,8 +40,16 @@
     "non_critical": "log_later_and_continue_if_safe",
     "critical": "fix_loop_then_verify_again"
   },
-  "review_decisions": ["ACCEPT", "REJECT", "DEFER", "LATER"],
-  "severity_levels": ["critical", "non-critical"],
+  "review_decisions": [
+    "ACCEPT",
+    "REJECT",
+    "DEFER",
+    "LATER"
+  ],
+  "severity_levels": [
+    "critical",
+    "non-critical"
+  ],
   "round_policy": {
     "non_critical_after_round_1": "log_later_and_continue_if_verification_passed",
     "critical_after_round_1": "run_round_2",

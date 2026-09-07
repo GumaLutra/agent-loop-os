@@ -18,6 +18,7 @@ from textwrap import dedent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from prompt_templates import get_template
 from size_gate import run_size_check
+from recall import main as recall_main
 
 
 BRAND = "Made by sudal."
@@ -174,6 +175,7 @@ def cmd_task_start(args: argparse.Namespace) -> int:
         Mode: {args.mode}
         Task type: {args.type}
         Title: {args.title}
+        project_root: {root_path(args)}
         Date: {now_iso()}
 
         ## Goal
@@ -235,6 +237,7 @@ def cmd_task_start(args: argparse.Namespace) -> int:
     path.write_text(content, encoding="utf-8")
     (state_path(args) / "active-task.txt").write_text(str(path), encoding="utf-8")
     print(f"Created task brief: {path}")
+    recall_main(["--root", str(root_path(args))])
     return 0
 
 

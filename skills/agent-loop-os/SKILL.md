@@ -7,9 +7,18 @@ description: Tool-neutral AI-agent operating workflow for risky or non-trivial t
 
 Made by sudal.
 
-Current version: 0.1.1.
+Current version: 0.1.2.
 
 Use Agent Loop OS to avoid shallow completion. The work is not done until the agent can show evidence, review the result, answer review items, verify the final state, and record any repeated mistake worth preventing next time.
+
+## Resume and Handoff
+
+Before substantive work, delegation, task switches or resuming after compaction,
+read `references/handoff.md` and run the read-only `scripts/recall.py` with the
+exact intended project root. Preserve fixed decisions and existing authorization.
+Update the task note before handoff or ending substantial work.
+Repository-level resources (`packs`, `config`, `templates`) live two directories
+above this skill in a full installation; resolve the installed path first.
 
 ## Choose Mode
 

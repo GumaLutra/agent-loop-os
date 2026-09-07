@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2
+
+- Add exact-project task-note recall with read-only Claude, Codex and Cursor hook adapters.
+- Add handoff contracts, bounded review and authentication/usage evidence rules.
+- Test same-name project isolation, missing storage and hook output contracts.
+
 Made by sudal.
 
 ## 0.1.1 - 2026-06-21

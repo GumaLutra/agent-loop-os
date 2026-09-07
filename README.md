@@ -2,7 +2,7 @@
 
 Made by sudal.
 
-Current version: 0.1.1.
+Current version: 0.1.2.
 
 Agent Loop OS is a tool-neutral operating system for AI-agent work. It combines four habits:
 
@@ -207,3 +207,13 @@ Made by sudal.
 ```
 
 The MIT license also requires the copyright notice to remain in substantial copies.
+
+## Automatic handoff recall (0.1.2)
+
+The read-only recall helper discovers up to three task notes by exact project root.
+Install it as a SessionStart/UserPromptSubmit hook to remind agents to retrieve
+relevant decisions and save progress without asking the user to remember.
+It never reads transcripts or uploads note bodies. Missing storage is reported.
+See [handoff and bounded review](skills/agent-loop-os/references/handoff.md).
+
+Run checks with `python3 -m unittest discover -s tests`.

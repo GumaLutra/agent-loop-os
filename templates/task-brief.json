@@ -38,5 +38,10 @@
     }
   ],
   "verification_criteria": [],
-  "completion_evidence": []
+  "completion_evidence": [],
+  "project_root": "",
+  "task_id": "",
+  "fixed_decisions": [],
+  "handoff_note": "",
+  "next_action": ""
 }

@@ -20,5 +20,17 @@
     "weak_or_missing_verification",
     "repeated_mistake_patterns",
     "risky_assumptions"
-  ]
+  ],
+  "project_root": "",
+  "task_id": "",
+  "role": "read-only reviewer",
+  "fixed_decisions": [],
+  "prohibited_changes": [],
+  "timeout_seconds": null,
+  "requested_model": "",
+  "actual_model": "",
+  "call_started_at": "",
+  "call_finished_at": "",
+  "call_outcome": "",
+  "usage": null
 }
